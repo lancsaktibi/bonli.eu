@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
-    cb(error, "bonli.eu/images");
+    cb(error, "images");
   },
   filename: (req, file, cb) => {
     // split by spaces then rejoin with -

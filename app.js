@@ -8,12 +8,7 @@ const postsRoutes = require('./routes/posts');
 const app = express();
 
 // connect to db
-mongoose.connect(
-  "mongodb+srv://" +
-  process.env.MONGO_USER + ":" +
-  process.env.MONGO_PW + "@" +
-  process.env.MONGO_SERVER
-)
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: 'true'})
   .then(() => {
     console.log('Connected to database!');
   })
