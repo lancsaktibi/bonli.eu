@@ -8,7 +8,12 @@ const postsRoutes = require('./routes/posts');
 const app = express();
 
 // connect to db
-mongoose.connect("mongodb+srv://root:Gtiborla1@cluster0-s8xhe.mongodb.net/node-angular?retryWrites=true&w=majority")
+mongoose.connect(
+  "mongodb+srv://" +
+  process.env.MONGO_USER + ":" +
+  process.env.MONGO_PW + "@" +
+  process.env.MONGO_SERVER
+)
   .then(() => {
     console.log('Connected to database!');
   })
@@ -21,7 +26,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // provide access to the images folder
-app.use("/images", express.static(path.join("bonli.eu/images"))); // forward request to /backend/images
+app.use("/images", express.static(path.join(__dirname, "images"))); // forward request to /images
+// provide access to the angular folder
+app.use("/", express.static(path.join(__dirname, "angular"))); // forward request to /angular
 
 // middleware for CORS - Cross Origin Resource Sharing
 app.use((req, res, next) => {
@@ -33,5 +40,10 @@ app.use((req, res, next) => {
 
 // use router and routes file
 app.use("/api/posts", postsRoutes);
+
+// any other routes: pass over to the angular app
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "angular", index.html));
+})
 
 module.exports = app;
