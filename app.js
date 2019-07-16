@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const postsRoutes = require('./routes/posts');
+const userRoutes = require('./routes/user');
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 
 // use router and routes file
 app.use("/api/posts", postsRoutes);
+app.use("/api/user", userRoutes);
 
 // any other routes: pass over to the angular app
 app.use((req, res, next) => {
